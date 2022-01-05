@@ -1,7 +1,7 @@
 var searchFormEl = document.querySelector('#search-city');
 var resultTextEl = document.querySelector('#currentCityName');
-var currentCityName;
-var APIkey = 'b2c9f3b2cf68af9d7481702f882a3e24';
+var currentCityName = '';
+var APIkey = '602aeb9d87dcb3f34675e61063025e32';
 var weather = [];
 var cityList = [];
 
@@ -9,11 +9,11 @@ function displayWeather(weather) {
     $("#day0-wind").text(weather[0].wind);
     $("#day0-UV").text(weather[0].UV);
     $('#currentCityName').text(currentCityName);
-    if (weather[0].UV >= 9) { varUV = 'Red' };
-    if (weather[0].UV < 6) { varUV = 'Yellow' };
+    if (weather[0].UV > 9) { varUV = 'Red' };
+    if (weather[0].UV < 9 && 3) { varUV = 'Yellow' };
     if (weather[0].UV < 3) { varUV = 'Green' };
     $('#day0-UV').css("background-color", varUV);
-    for (var i = 0; i <= 5; i++) {
+    for (var i = 0; i <= 6; i++) {
         $('#day' + i + '-temp').text(weather[i].temp);
         $('#day' + i + '-icon').html(weather[i].icon);
         $('#day' + i + '-hum').text(weather[i].hum);
@@ -58,6 +58,7 @@ function searchApi2(varLat, varLon, currentCityName) {
                     "UV": locRes.daily[i].uvi,
                     "icon": 'https://openweathermap.org/img/wn/' + locRes.daily[i].weather[0].icon + '.png'
                 }
+                wDay.date=wDay.date * 1000;
                 var dateObject = new Date(wDay.date);
                 wDay.date = dateObject.toLocaleDateString();
                 weather.push(wDay);
